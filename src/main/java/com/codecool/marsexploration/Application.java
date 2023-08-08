@@ -53,7 +53,34 @@ public class Application {
                 ""
         );
 
-        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg);
+        MapElementConfiguration pitsCfg = new MapElementConfiguration(
+                pitSymbol,
+                "pits",
+                List.of(
+                        new ElementToSize(2, 10),
+                        new ElementToSize(1, 20)
+                ),
+                0,
+                ""
+        );
+
+        MapElementConfiguration mineralsCfg = new MapElementConfiguration(
+                mineralSymbol,
+                "minerals",
+                List.of(new ElementToSize(10, 1)),
+                0,
+                ""
+        );
+
+        MapElementConfiguration watersCfg = new MapElementConfiguration(
+                waterSymbol,
+                "waters",
+                List.of(new ElementToSize(10, 1)),
+                0,
+                ""
+        );
+
+        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
         return new MapConfiguration(1000, 0.5, elementsCfg);
     }
 }
