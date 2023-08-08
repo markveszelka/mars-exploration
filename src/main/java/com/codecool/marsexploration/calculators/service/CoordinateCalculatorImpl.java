@@ -10,10 +10,10 @@ public class CoordinateCalculatorImpl implements CoordinateCalculator {
     public Coordinate getRandomCoordinate(int dimension) {
         // dimension * dimension négyzeten belül keresek random koordinátát.
         Random random = new Random();
-        int mapSize = (int) Math.floor(Math.sqrt(1000));
-        int x = random.nextInt(mapSize);
-        int y = random.nextInt(mapSize);
-        return new Coordinate(x + dimension, y + dimension);
+        int mapSize = (int) Math.sqrt(625);
+        int x = random.nextInt(mapSize - dimension);
+        int y = random.nextInt(mapSize - dimension);
+        return new Coordinate(x, y);
     }
 
     @Override
