@@ -66,19 +66,54 @@ class MapConfigurationValidatorImplTest {
             ""
     );
 
-    private final static List<MapElementConfiguration> VALID_MOUNTAINS_CFG = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
-    private final static List<MapElementConfiguration> INVALID_MOUNTAINS_CFG = List.of(mountainsCfg, pitsCfg, mineralsCfg, invalid_watersCfg);
+    private static final MapElementConfiguration invalid_mountainsCfg = new MapElementConfiguration(
+            mountainSymbol,
+            "mountain",
+            List.of(
+                    new ElementToSize(2, 1),
+                    new ElementToSize(1, 1)
+            ),
+            3,
+            ""
+    );
+
+    private final static List<MapElementConfiguration> VALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
+    private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, invalid_watersCfg);
+    private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_2 = List.of(invalid_mountainsCfg, invalid_watersCfg);
+    private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_3 = List.of(invalid_mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
 
     public static Stream<Arguments> parameters() {
         return Stream.of(
+                // NORMAL VALID TEST
                 of(true, new MapConfiguration(
                         1000,
                         0.5,
-                        VALID_MOUNTAINS_CFG)),
+                        VALID_TEST_CONFIG_1)),
+                // CHECK THE SMALLER OF EQUAL RATIO CASE:
+                of(true, new MapConfiguration(
+                        260,
+                        0.5,
+                        VALID_TEST_CONFIG_1)),
+                // CHECK IF THE RATIO IS LOWER:
+                of(false, new MapConfiguration(
+                        100,
+                        0.5,
+                        VALID_TEST_CONFIG_1)),
+                // CHECK AN INVALID CONFIGURATION LIST
                 of(false, new MapConfiguration(
                         1000,
                         0.5,
-                        INVALID_MOUNTAINS_CFG))
+                        INVALID_TEST_CONFIG_1)),
+                // CHECK ANOTHER INVALID CONFIGURATION LIST
+                of(false, new MapConfiguration(
+                        1000,
+                        0.5,
+                        INVALID_TEST_CONFIG_2)),
+                // CHECK ANOTHER INVALID CONFIGURATION LIST
+                of(false, new MapConfiguration(
+                        1000,
+                        0.5,
+                        INVALID_TEST_CONFIG_3))
         );
     }
 
