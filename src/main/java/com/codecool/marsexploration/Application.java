@@ -60,7 +60,7 @@ public class Application {
                         new ElementToSize(2, 10),
                         new ElementToSize(1, 20)
                 ),
-                0,
+                10,
                 ""
         );
 
