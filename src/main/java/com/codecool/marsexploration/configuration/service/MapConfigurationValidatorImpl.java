@@ -22,12 +22,11 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
                 int sizePerElement = element.elementCount() * element.size();
                 totalElementsInConfig += sizePerElement;
 
-                if (totalElementsInConfig < mapSize * elementToSpaceRatio) {
-                    if (element.size() > 1 && config.dimensionGrowth() > 0) {
+                if (totalElementsInConfig <= (mapSize * elementToSpaceRatio)) {
+                    if (config.dimensionGrowth() > 0 && element.size() > 1) {
                         isConfigValid = true;
                     }
                 }
-
             }
         }
         System.out.println("VALID NUMBER OF ELEMENTS!");
