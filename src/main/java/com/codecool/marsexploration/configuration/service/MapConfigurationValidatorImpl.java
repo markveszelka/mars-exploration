@@ -9,7 +9,7 @@ import java.util.List;
 public class MapConfigurationValidatorImpl implements MapConfigurationValidator {
     @Override
     public boolean validate(MapConfiguration mapConfig) {
-        boolean isValid = false;
+        boolean isOverallValid = false;
         int mapSize = mapConfig.mapSize();
         List<MapElementConfiguration> mapElementConfigurationList = mapConfig.mapElementConfigurations();
         double elementToSpaceRatio = mapConfig.elementToSpaceRatio();
@@ -25,10 +25,10 @@ public class MapConfigurationValidatorImpl implements MapConfigurationValidator 
         }
 
         if (isRatioValid && isMapElementConfigValid) {
-            isValid = true;
+            isOverallValid = true;
         }
 
-        return isValid;
+        return isOverallValid;
     }
 
     private boolean isElementConfigValid(MapElementConfiguration config) {
