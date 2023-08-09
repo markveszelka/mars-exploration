@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MapElementBuilderImplTest {
 
@@ -19,6 +19,7 @@ class MapElementBuilderImplTest {
         DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
         CoordinateCalculator coordinateCalculator = new CoordinateCalculatorImpl();
         MapElementBuilder mapElementBuilder = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
+
         // ACT
         MapElement mapElement = mapElementBuilder.build(
                 20,
@@ -26,10 +27,21 @@ class MapElementBuilderImplTest {
                 "mountain",
                 3,
                 "");
-        // ASSERT
+
         String[][] representation = mapElement.getRepresentation();
-        for (String [] rep : representation) {
-//            System.out.println(Arrays.toString(rep));
+        int actualDimension = representation.length;
+        int expectedDimension = dimensionCalculator.calculateDimension(20, 3);
+
+        // ASSERT
+        int counter = 0;
+        for (String[] row : representation) {
+            for (String element : row) {
+                if (element.equals("#")) counter++;
+            }
         }
+
+        assertEquals(20, counter);
+        assertEquals(expectedDimension, actualDimension);
+
     }
 }

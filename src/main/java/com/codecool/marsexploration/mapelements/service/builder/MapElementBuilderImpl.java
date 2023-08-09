@@ -17,6 +17,11 @@ public class MapElementBuilderImpl implements MapElementBuilder {
         this.coordinateCalculator = coordinateCalculator;
     }
 
+    private static void replaceNullWithEmptyStrings(String[][] representation) {
+        for (String[] row : representation) {
+            Arrays.fill(row, "");
+        }
+    }
 
     @Override
     public MapElement build(int size, String symbol, String name, int dimensionGrowth, String preferredLocationSymbol) {
@@ -26,10 +31,10 @@ public class MapElementBuilderImpl implements MapElementBuilder {
         replaceNullWithEmptyStrings(representation);
         placeElementRandomlyInRepresentation(size, symbol, dimension, representation);
 
-//        System.out.println(name);
-//        for (String [] rep : representation) {
-//            System.out.println(Arrays.toString(rep));
-//        }
+        System.out.println(name);
+        for (String[] rep : representation) {
+            System.out.println(Arrays.toString(rep));
+        }
 
         return new MapElement(
                 representation,
@@ -38,16 +43,14 @@ public class MapElementBuilderImpl implements MapElementBuilder {
                 preferredLocationSymbol);
     }
 
-    private static void replaceNullWithEmptyStrings(String[][] representation) {
-        for (String[] row : representation) {
-            Arrays.fill(row, "");
-        }
-    }
-
     private void placeElementRandomlyInRepresentation(int size, String symbol, int dimension, String[][] representation) {
         for (int i = 0; i < size; i++) {
             Coordinate randomCoordinate = coordinateCalculator.getRandomCoordinate(dimension);
-            representation[randomCoordinate.x()][randomCoordinate.y()] = symbol;
+            if (!representation[randomCoordinate.x()][randomCoordinate.y()].equals(symbol)) {
+                representation[randomCoordinate.x()][randomCoordinate.y()] = symbol;
+            } else {
+                i--;
+            }
         }
     }
 }
