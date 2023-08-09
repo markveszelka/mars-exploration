@@ -52,6 +52,7 @@ public class Application {
 
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
         Map generateMap = mapGenerator.generate(mapConfig);
+        generateMap.setSuccessfullyGenerated(true);
         String[][] representation = generateMap.getRepresentation();
         replaceNullWithEmptyStrings(representation);
 
