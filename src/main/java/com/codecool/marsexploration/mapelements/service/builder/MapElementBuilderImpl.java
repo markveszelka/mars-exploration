@@ -39,7 +39,7 @@ public class MapElementBuilderImpl implements MapElementBuilder {
 
     private void replaceNullWithEmptyStrings(String[][] representation) {
         for (String[] row : representation) {
-            Arrays.fill(row, "");
+            Arrays.fill(row, " ");
         }
     }
 
