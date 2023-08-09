@@ -3,10 +3,12 @@ package com.codecool.marsexploration;
 import com.codecool.marsexploration.calculators.service.*;
 import com.codecool.marsexploration.configuration.model.*;
 import com.codecool.marsexploration.configuration.service.*;
+import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.builder.*;
 import com.codecool.marsexploration.mapelements.service.generator.*;
 import com.codecool.marsexploration.mapelements.service.placer.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
@@ -17,11 +19,14 @@ public class Application {
         System.out.println("Mars Exploration Sprint 1");
         MapConfiguration mapConfig = getConfiguration();
 
-        DimensionCalculator dimensionCalculator = null;
+        DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
         CoordinateCalculator coordinateCalculator = null;
 
-        MapElementBuilder mapElementFactory = null;
-        MapElementsGenerator mapElementsGenerator = null;
+        /////
+        MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator);
+        MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
+        Iterable<MapElement> mapElements = mapElementsGenerator.createAll(mapConfig);
+        /////
 
         MapConfigurationValidator mapConfigValidator = new MapConfigurationValidatorImpl();
         System.out.println("MAP CONFIGURATION IS VALID: " + mapConfigValidator.validate(mapConfig));
