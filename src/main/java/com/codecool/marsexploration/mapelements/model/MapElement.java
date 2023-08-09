@@ -17,6 +17,10 @@ public class MapElement extends Map {
         this.preferredLocationSymbol = preferredLocationSymbol;
     }
 
+    public int getDimension() {
+        return dimension;
+    }
+
     @Override
     public String toString() {
         return super.toString();
