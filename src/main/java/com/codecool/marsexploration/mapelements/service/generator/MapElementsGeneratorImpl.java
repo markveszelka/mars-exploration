@@ -42,8 +42,11 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
     private void addMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
         for (ElementToSize element : elementToSizesList) {
             int size = element.size();
-            MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
-            mapElementsList.add(mapElement);
+            int elementCount = element.elementCount();
+            for (int i = 0; i < elementCount; i++) {
+                MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
+                mapElementsList.add(mapElement);
+            }
         }
     }
 }
