@@ -10,7 +10,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 class MapConfigurationValidatorImplTest {
@@ -57,7 +57,7 @@ class MapConfigurationValidatorImplTest {
             0,
             ""
     );
-
+    private final static List<MapElementConfiguration> VALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
     private static final MapElementConfiguration invalid_watersCfg = new MapElementConfiguration(
             waterSymbol,
             "waters",
@@ -65,7 +65,7 @@ class MapConfigurationValidatorImplTest {
             10,
             ""
     );
-
+    private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, invalid_watersCfg);
     private static final MapElementConfiguration invalid_mountainsCfg = new MapElementConfiguration(
             mountainSymbol,
             "mountain",
@@ -76,9 +76,6 @@ class MapConfigurationValidatorImplTest {
             3,
             ""
     );
-
-    private final static List<MapElementConfiguration> VALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
-    private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_1 = List.of(mountainsCfg, pitsCfg, mineralsCfg, invalid_watersCfg);
     private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_2 = List.of(invalid_mountainsCfg, invalid_watersCfg);
     private final static List<MapElementConfiguration> INVALID_TEST_CONFIG_3 = List.of(invalid_mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
 
