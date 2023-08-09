@@ -29,6 +29,13 @@ public class CoordinateCalculatorImpl implements CoordinateCalculator {
 
     @Override
     public Iterable<Coordinate> getAdjacentCoordinates(Iterable<Coordinate> coordinates, int dimension) {
-        return null;
+        List<Coordinate> resultList = new ArrayList<>();
+        for (Coordinate coord1 : coordinates) {
+            Iterable<Coordinate> adjacentCoordList = getAdjacentCoordinates(coord1, dimension);
+            for (Coordinate coord2 : adjacentCoordList) {
+                resultList.add(coord2);
+            }
+        }
+        return resultList;
     }
 }
