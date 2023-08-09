@@ -3,6 +3,7 @@ package com.codecool.marsexploration;
 import com.codecool.marsexploration.calculators.service.*;
 import com.codecool.marsexploration.configuration.model.*;
 import com.codecool.marsexploration.configuration.service.*;
+import com.codecool.marsexploration.mapelements.model.Map;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.builder.*;
 import com.codecool.marsexploration.mapelements.service.generator.*;
@@ -19,27 +20,61 @@ public class Application {
     public static void main(String[] args) {
         System.out.println("Mars Exploration Sprint 1");
         MapConfiguration mapConfig = getConfiguration();
+        int mapSizeSqrt = (int) Math.sqrt(mapConfig.mapSize());
+        Map map = new Map(new String[mapSizeSqrt][mapSizeSqrt]);
+
+        MapConfigurationValidator mapConfigValidator = new MapConfigurationValidatorImpl();
+        System.out.println("MAP CONFIGURATION IS VALID: " + mapConfigValidator.validate(mapConfig));
 
         DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
         CoordinateCalculator coordinateCalculator = new CoordinateCalculatorImpl();
 
-        /////
         MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
+
+        // //
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
         System.out.println("Number of elements: " + mapElements.size());
-        /////
 
-        MapConfigurationValidator mapConfigValidator = new MapConfigurationValidatorImpl();
-        System.out.println("MAP CONFIGURATION IS VALID: " + mapConfigValidator.validate(mapConfig));
-        MapElementPlacer mapElementPlacer = null;
+        MapElementPlacer mapElementPlacer = new MapElementPlacerImpl();
+        for (MapElement mapelement : mapElements) {
+            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+            if (canPlaceElement) {
+                mapElementPlacer.placeElement(
+                        mapelement,
+                        map.getRepresentation(),
+                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
+            } else {
+                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+            }
+        }
+        // //
 
-        MapGenerator mapGenerator = new MapGeneratorImpl();
-        mapGenerator.generate(mapConfig);
+        MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
+        Map generateMap = mapGenerator.generate(mapConfig);
+        String[][] representation = generateMap.getRepresentation();
+        replaceNullWithEmptyStrings(representation);
+
+        for (String[] rep : representation) {
+            System.out.println(Arrays.toString(rep));
+        }
 
         createAndWriteMaps(3, mapGenerator, mapConfig);
 
         System.out.println("Mars maps successfully generated.");
+    }
+
+    private static void replaceNullWithEmptyStrings(String[][] representation) {
+        for (String[] row : representation) {
+            Arrays.fill(row, " ");
+        }
+    }
+
+    private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
+        return mapElementPlacer.canPlaceElement(
+                mapelement,
+                map.getRepresentation(),
+                coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
     }
 
     private static void createAndWriteMaps(int count, MapGenerator mapGenerator, MapConfiguration mapConfig) {
