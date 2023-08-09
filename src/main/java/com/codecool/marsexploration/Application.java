@@ -34,7 +34,8 @@ public class Application {
         System.out.println("MAP CONFIGURATION IS VALID: " + mapConfigValidator.validate(mapConfig));
         MapElementPlacer mapElementPlacer = null;
 
-        MapGenerator mapGenerator = null;
+        MapGenerator mapGenerator = new MapGeneratorImpl();
+        mapGenerator.generate(mapConfig);
 
         createAndWriteMaps(3, mapGenerator, mapConfig);
 
@@ -88,7 +89,7 @@ public class Application {
                 ""
         );
 
-        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg);
+        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
         return new MapConfiguration(625, 0.5, elementsCfg);
     }
 }
