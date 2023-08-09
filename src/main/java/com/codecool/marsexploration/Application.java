@@ -31,30 +31,27 @@ public class Application {
 
         MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
-
-        // //
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
         System.out.println("Number of elements: " + mapElements.size());
-
         MapElementPlacer mapElementPlacer = new MapElementPlacerImpl();
-        for (MapElement mapelement : mapElements) {
-            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-            if (canPlaceElement) {
-                mapElementPlacer.placeElement(
-                        mapelement,
-                        map.getRepresentation(),
-                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
-            } else {
-                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-            }
-        }
-        // //
 
-        MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
-        Map generateMap = mapGenerator.generate(mapConfig);
-        generateMap.setSuccessfullyGenerated(true);
-        String[][] representation = generateMap.getRepresentation();
+//        for (MapElement mapelement : mapElements) {
+//            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+//            if (canPlaceElement) {
+//                mapElementPlacer.placeElement(
+//                        mapelement,
+//                        map.getRepresentation(),
+//                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
+//            } else {
+//                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+//            }
+//        }
+
+        String[][] representation = map.getRepresentation();
         replaceNullWithEmptyStrings(representation);
+        MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
+        Map generatedMap = mapGenerator.generate(mapConfig);
+        generatedMap.setSuccessfullyGenerated(true);
 
         for (String[] rep : representation) {
             System.out.println(Arrays.toString(rep));
@@ -125,6 +122,7 @@ public class Application {
                 ""
         );
 
+//        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg);
         List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
         return new MapConfiguration(625, 0.5, elementsCfg);
     }
