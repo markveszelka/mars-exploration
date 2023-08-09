@@ -35,19 +35,24 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
             String preferredLocationSymbol = mapElementConfiguration.preferredLocationSymbol();
             List<ElementToSize> elementToSizesList = mapElementConfiguration.elementToSizes();
 
-            addBuiltMapElementsToList(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, elementToSizesList);
+            iterateOnElementToSizes(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, elementToSizesList);
         }
     }
 
-    private void addBuiltMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
+    private void iterateOnElementToSizes(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
         for (ElementToSize element : elementToSizesList) {
             int size = element.size();
             int elementCount = element.elementCount();
-            for (int i = 0; i < elementCount; i++) {
-                MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
-                mapElement.setSuccessfullyGenerated(true);
-                mapElementsList.add(mapElement);
-            }
+
+            addBuiltMapElementsToList(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, size, elementCount);
+        }
+    }
+
+    private void addBuiltMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, int size, int elementCount) {
+        for (int i = 0; i < elementCount; i++) {
+            MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
+            mapElement.setSuccessfullyGenerated(true);
+            mapElementsList.add(mapElement);
         }
     }
 }
