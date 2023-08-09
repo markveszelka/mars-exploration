@@ -2,24 +2,29 @@ package com.codecool.marsexploration.calculators.service;
 
 import com.codecool.marsexploration.calculators.model.Coordinate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class CoordinateCalculatorImpl implements CoordinateCalculator {
 
     @Override
     public Coordinate getRandomCoordinate(int dimension) {
-        // dimension * dimension négyzeten belül keresek random koordinátát.
         Random random = new Random();
-        int mapSize = (int) Math.sqrt(625);
-        int x = random.nextInt(mapSize - dimension);
-        int y = random.nextInt(mapSize - dimension);
+        int x = random.nextInt(dimension);
+        int y = random.nextInt(dimension);
         return new Coordinate(x, y);
     }
 
     @Override
     public Iterable<Coordinate> getAdjacentCoordinates(Coordinate coordinate, int dimension) {
-
-        return null;
+        List<Coordinate> coordinates = new ArrayList<>();
+        for (int i = -dimension; i <= dimension; i++) {
+            for (int j = -dimension; j <= dimension; j++) {
+                coordinates.add(new Coordinate(coordinate.x() + i, coordinate.y() + j));
+            }
+        }
+        return coordinates;
     }
 
     @Override
