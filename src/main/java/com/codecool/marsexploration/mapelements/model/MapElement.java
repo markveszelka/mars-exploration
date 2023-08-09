@@ -17,10 +17,6 @@ public class MapElement extends Map {
         this.preferredLocationSymbol = preferredLocationSymbol;
     }
 
-    public String[][] getRepresentation() {
-        return representation;
-    }
-
     @Override
     public String toString() {
         return super.toString();
