@@ -51,7 +51,6 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
     private void addBuiltMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, int size, int elementCount) {
         for (int i = 0; i < elementCount; i++) {
             MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
-            mapElement.setSuccessfullyGenerated(true);
             mapElementsList.add(mapElement);
         }
     }
