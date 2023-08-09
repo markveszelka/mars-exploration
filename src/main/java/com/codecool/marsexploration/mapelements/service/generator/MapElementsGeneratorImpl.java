@@ -22,6 +22,12 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
         List<MapElement> mapElementsList = new ArrayList<>();
         List<MapElementConfiguration> mapElementConfigurations = mapConfig.mapElementConfigurations();
 
+        iterateOnMapElementConfigurations(mapElementsList, mapElementConfigurations);
+
+        return mapElementsList;
+    }
+
+    private void iterateOnMapElementConfigurations(List<MapElement> mapElementsList, List<MapElementConfiguration> mapElementConfigurations) {
         for (MapElementConfiguration mapElementConfiguration : mapElementConfigurations) {
             int dimensionGrowth = mapElementConfiguration.dimensionGrowth();
             String name = mapElementConfiguration.name();
@@ -29,13 +35,15 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
             String preferredLocationSymbol = mapElementConfiguration.preferredLocationSymbol();
             List<ElementToSize> elementToSizesList = mapElementConfiguration.elementToSizes();
 
-            for (ElementToSize element : elementToSizesList) {
-                int size = element.size();
-                MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
-                mapElementsList.add(mapElement);
-            }
+            addMapElementsToList(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, elementToSizesList);
         }
+    }
 
-        return mapElementsList;
+    private void addMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
+        for (ElementToSize element : elementToSizesList) {
+            int size = element.size();
+            MapElement mapElement = mapElementFactory.build(size, symbol, name, dimensionGrowth, preferredLocationSymbol);
+            mapElementsList.add(mapElement);
+        }
     }
 }
