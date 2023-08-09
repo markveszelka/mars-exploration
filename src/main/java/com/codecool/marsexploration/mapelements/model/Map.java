@@ -13,6 +13,10 @@ public class Map {
         return successfullyGenerated;
     }
 
+    public String[][] getRepresentation() {
+        return representation;
+    }
+
     public void setSuccessfullyGenerated(boolean successfullyGenerated) {
         this.successfullyGenerated = successfullyGenerated;
     }

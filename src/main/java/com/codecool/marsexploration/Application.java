@@ -9,6 +9,7 @@ import com.codecool.marsexploration.mapelements.service.generator.*;
 import com.codecool.marsexploration.mapelements.service.placer.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Application {
@@ -20,12 +21,13 @@ public class Application {
         MapConfiguration mapConfig = getConfiguration();
 
         DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
-        CoordinateCalculator coordinateCalculator = null;
+        CoordinateCalculator coordinateCalculator = new CoordinateCalculatorImpl();
 
         /////
-        MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator);
+        MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
-        Iterable<MapElement> mapElements = mapElementsGenerator.createAll(mapConfig);
+        List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
+        System.out.println("Number of elements: " + mapElements.size());
         /////
 
         MapConfigurationValidator mapConfigValidator = new MapConfigurationValidatorImpl();
