@@ -35,11 +35,11 @@ public class MapElementsGeneratorImpl implements MapElementsGenerator {
             String preferredLocationSymbol = mapElementConfiguration.preferredLocationSymbol();
             List<ElementToSize> elementToSizesList = mapElementConfiguration.elementToSizes();
 
-            addMapElementsToList(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, elementToSizesList);
+            addBuiltMapElementsToList(mapElementsList, dimensionGrowth, name, symbol, preferredLocationSymbol, elementToSizesList);
         }
     }
 
-    private void addMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
+    private void addBuiltMapElementsToList(List<MapElement> mapElementsList, int dimensionGrowth, String name, String symbol, String preferredLocationSymbol, List<ElementToSize> elementToSizesList) {
         for (ElementToSize element : elementToSizesList) {
             int size = element.size();
             int elementCount = element.elementCount();
