@@ -17,12 +17,6 @@ public class MapElementBuilderImpl implements MapElementBuilder {
         this.coordinateCalculator = coordinateCalculator;
     }
 
-    private static void replaceNullWithEmptyStrings(String[][] representation) {
-        for (String[] row : representation) {
-            Arrays.fill(row, "");
-        }
-    }
-
     @Override
     public MapElement build(int size, String symbol, String name, int dimensionGrowth, String preferredLocationSymbol) {
         int dimension = dimensionCalculator.calculateDimension(size, dimensionGrowth);
@@ -41,6 +35,12 @@ public class MapElementBuilderImpl implements MapElementBuilder {
                 name,
                 dimension,
                 preferredLocationSymbol);
+    }
+
+    private void replaceNullWithEmptyStrings(String[][] representation) {
+        for (String[] row : representation) {
+            Arrays.fill(row, "");
+        }
     }
 
     private void placeElementRandomlyInRepresentation(int size, String symbol, int dimension, String[][] representation) {

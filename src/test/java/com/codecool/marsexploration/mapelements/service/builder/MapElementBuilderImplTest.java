@@ -9,12 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MapElementBuilderImplTest {
 
     @Test
-    void build() {
+    void build() {  // HAS TO BE WRITTEN WITH MOCKING
         // ARRANGE
         DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
         CoordinateCalculator coordinateCalculator = new CoordinateCalculatorImpl();
@@ -29,10 +29,10 @@ class MapElementBuilderImplTest {
                 "");
 
         String[][] representation = mapElement.getRepresentation();
-        int actualDimension = representation.length;
-        int expectedDimension = dimensionCalculator.calculateDimension(20, 3);
 
         // ASSERT
+        int actualDimension = representation.length;
+        int expectedDimension = dimensionCalculator.calculateDimension(20, 3);
         int counter = 0;
         for (String[] row : representation) {
             for (String element : row) {
@@ -42,6 +42,7 @@ class MapElementBuilderImplTest {
 
         assertEquals(20, counter);
         assertEquals(expectedDimension, actualDimension);
+        assertFalse(mapElement.isSuccessfullyGenerated());
 
     }
 }
