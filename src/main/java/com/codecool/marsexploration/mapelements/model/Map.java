@@ -18,7 +18,13 @@ public class Map {
     }
 
     private static String createStringRepresentation(String[][] arr) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        for(String[] s1 : arr){
+            for(String s2 : s1){
+                sb.append(s2);
+            }
+        }
+        return sb.toString();
     }
 
     @Override
