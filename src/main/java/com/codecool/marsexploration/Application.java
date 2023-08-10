@@ -61,8 +61,8 @@ public class Application {
         String[][] representation = generateMap.getRepresentation();
         replaceNullWithEmptyStrings(representation);
 
-        MapFileWriter fileWriter = new MapFileWriterImpl(generateMap, FileDir);
-        fileWriter.executeWrite();
+        MapFileWriter fileWriter = new MapFileWriterImpl();
+        fileWriter.writeMapFile(generateMap, FileDir);
 
 //        for (String[] rep : representation) {
 //            System.out.println(Arrays.toString(rep));
