@@ -45,6 +45,7 @@ public class Application {
                 }
             }
         }
+
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
         Map generatedMap = mapGenerator.generate(mapConfig);
         generatedMap.setSuccessfullyGenerated(true);

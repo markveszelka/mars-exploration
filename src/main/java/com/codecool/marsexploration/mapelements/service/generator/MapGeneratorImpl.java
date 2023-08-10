@@ -7,7 +7,7 @@ import com.codecool.marsexploration.mapelements.model.Map;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacer;
 
-import java.util.*;
+import java.util.List;
 
 public class MapGeneratorImpl implements MapGenerator {
 
@@ -21,6 +21,15 @@ public class MapGeneratorImpl implements MapGenerator {
         this.coordinateCalculator = coordinateCalculator;
         this.mapElementPlacer = mapElementPlacer;
         this.map = map;
+    }
+
+    private static boolean callCanPlaceElementMethod(Map map, Coordinate randomCord, MapElementPlacer mapElementPlacer, MapElement mapelement) {
+        String[][] mapRepresentation = map.getRepresentation();
+
+        return mapElementPlacer.canPlaceElement(
+                mapelement,
+                mapRepresentation,
+                randomCord);
     }
 
     @Override
@@ -39,21 +48,14 @@ public class MapGeneratorImpl implements MapGenerator {
                         mapelement,
                         mapRepresentation,
                         randomCord);
+                mapelement.setSuccessfullyGenerated(true);
             } else {
+                mapelement.setSuccessfullyGenerated(false);
                 randomCord = coordinateCalculator.getRandomCoordinate(mapDimension);
                 callCanPlaceElementMethod(map, randomCord, mapElementPlacer, mapelement);
             }
         }
 
         return map;
-    }
-
-    private static boolean callCanPlaceElementMethod(Map map, Coordinate randomCord, MapElementPlacer mapElementPlacer, MapElement mapelement) {
-        String[][] mapRepresentation = map.getRepresentation();
-
-        return mapElementPlacer.canPlaceElement(
-                mapelement,
-                mapRepresentation,
-                randomCord);
     }
 }
