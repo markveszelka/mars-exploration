@@ -8,6 +8,8 @@ import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacer;
 
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class MapGeneratorImpl implements MapGenerator {
 
@@ -37,23 +39,18 @@ public class MapGeneratorImpl implements MapGenerator {
         int mapDimension = map.getRepresentation().length;
         String[][] mapRepresentation = map.getRepresentation();
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
-        // SORT BY SIZE, DESCENDING:
-        mapElements.sort((element1, element2) -> Integer.compare(element2.getDimension(), element1.getDimension()));
 
-        for (MapElement mapelement : mapElements) {
-            Coordinate randomCord = coordinateCalculator.getRandomCoordinate(mapDimension);
-            boolean canPlaceElement = callCanPlaceElementMethod(map, randomCord, mapElementPlacer, mapelement);
-            if (canPlaceElement) {
-                mapElementPlacer.placeElement(
-                        mapelement,
-                        mapRepresentation,
-                        randomCord);
-                mapelement.setSuccessfullyGenerated(true);
-            } else {
-                mapelement.setSuccessfullyGenerated(false);
-                randomCord = coordinateCalculator.getRandomCoordinate(mapDimension);
-                callCanPlaceElementMethod(map, randomCord, mapElementPlacer, mapelement);
+        Queue<MapElement> mapElementQueue = new PriorityQueue<>(new MapElementComparator());
+        mapElementQueue.addAll(mapElements);
+
+        while (!mapElementQueue.isEmpty()) {
+            MapElement actualElementToBePlaced = mapElementQueue.poll();
+            Coordinate randomCoordinate = coordinateCalculator.getRandomCoordinate(mapDimension);
+            while (!mapElementPlacer.canPlaceElement(actualElementToBePlaced, mapRepresentation, randomCoordinate)) {
+                randomCoordinate = coordinateCalculator.getRandomCoordinate(mapDimension);
             }
+            mapElementPlacer.placeElement(actualElementToBePlaced, mapRepresentation, randomCoordinate);
+            actualElementToBePlaced.setSuccessfullyGenerated(true);
         }
 
         return map;
