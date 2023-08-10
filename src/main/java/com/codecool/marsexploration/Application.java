@@ -36,30 +36,24 @@ public class Application {
 
         MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
-
-        // //
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
-        System.out.println("Number of elements: " + mapElements.size());
-
+        System.out.println("Number of elements: " + mapElements.size()); // EDDIG FIXEN JÓ
         MapElementPlacer mapElementPlacer = new MapElementPlacerImpl();
-        for (MapElement mapelement : mapElements) {
-            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-            if (canPlaceElement) {
-                mapElementPlacer.placeElement(
-                        mapelement,
-                        map.getRepresentation(),
-                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
-            } else {
-                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+
+        String[][] representation = map.getRepresentation();
+        replaceNullWithEmptyStrings(representation);
+        int counter = 0;
+        for (String[] row : representation) {
+            for (String string : row) {
+                if (string.equals(" ")) {
+                    counter++;
+                }
             }
         }
-        // //
 
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
-        Map generateMap = mapGenerator.generate(mapConfig);
-        generateMap.setSuccessfullyGenerated(true);
-        String[][] representation = generateMap.getRepresentation();
-        replaceNullWithEmptyStrings(representation);
+        Map generatedMap = mapGenerator.generate(mapConfig);
+        generatedMap.setSuccessfullyGenerated(true);
 
         MapFileWriter fileWriter = new MapFileWriterImpl();
         fileWriter.writeMapFile(generateMap, FileDir);
@@ -67,6 +61,19 @@ public class Application {
 //        for (String[] rep : representation) {
 //            System.out.println(Arrays.toString(rep));
 //        }
+
+        int counter2 = 0;
+        for (String[] row : representation) {
+            for (String string : row) {
+                if (!string.equals(" ")) {
+                    counter2++;
+                }
+            }
+        }
+        System.out.println("ALL EMPTY CELLS: " + counter);
+        System.out.println("TAKEN CELLS: " + counter2);
+        System.out.println("REMAINING EMPTY: " + (counter - counter2));
+        System.out.println("ELEMENTS: 130");
 
         createAndWriteMaps(3, mapGenerator, mapConfig);
 
@@ -77,13 +84,6 @@ public class Application {
         for (String[] row : representation) {
             Arrays.fill(row, " ");
         }
-    }
-
-    private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
-        return mapElementPlacer.canPlaceElement(
-                mapelement,
-                map.getRepresentation(),
-                coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
     }
 
     private static void createAndWriteMaps(int count, MapGenerator mapGenerator, MapConfiguration mapConfig) {

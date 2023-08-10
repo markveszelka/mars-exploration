@@ -1,5 +1,6 @@
 package com.codecool.marsexploration.mapelements.service.generator;
 
+import com.codecool.marsexploration.calculators.model.Coordinate;
 import com.codecool.marsexploration.calculators.service.CoordinateCalculator;
 import com.codecool.marsexploration.configuration.model.MapConfiguration;
 import com.codecool.marsexploration.mapelements.model.Map;
@@ -7,6 +8,8 @@ import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacer;
 
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class MapGeneratorImpl implements MapGenerator {
 
@@ -22,30 +25,34 @@ public class MapGeneratorImpl implements MapGenerator {
         this.map = map;
     }
 
+    private static boolean callCanPlaceElementMethod(Map map, Coordinate randomCord, MapElementPlacer mapElementPlacer, MapElement mapelement) {
+        String[][] mapRepresentation = map.getRepresentation();
+
+        return mapElementPlacer.canPlaceElement(
+                mapelement,
+                mapRepresentation,
+                randomCord);
+    }
+
     @Override
     public Map generate(MapConfiguration mapConfig) {
+        int mapDimension = map.getRepresentation().length;
+        String[][] mapRepresentation = map.getRepresentation();
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
-        System.out.println("Number of elements: " + mapElements.size());
 
-        for (MapElement mapelement : mapElements) {
-            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-            if (canPlaceElement) {
-                mapElementPlacer.placeElement(
-                        mapelement,
-                        map.getRepresentation(),
-                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
-            } else {
-                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+        Queue<MapElement> mapElementQueue = new PriorityQueue<>(new MapElementComparator());
+        mapElementQueue.addAll(mapElements);
+
+        while (!mapElementQueue.isEmpty()) {
+            MapElement actualElementToBePlaced = mapElementQueue.poll();
+            Coordinate randomCoordinate = coordinateCalculator.getRandomCoordinate(mapDimension);
+            while (!mapElementPlacer.canPlaceElement(actualElementToBePlaced, mapRepresentation, randomCoordinate)) {
+                randomCoordinate = coordinateCalculator.getRandomCoordinate(mapDimension);
             }
+            mapElementPlacer.placeElement(actualElementToBePlaced, mapRepresentation, randomCoordinate);
+            actualElementToBePlaced.setSuccessfullyGenerated(true);
         }
 
         return map;
-    }
-
-    private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
-        return mapElementPlacer.canPlaceElement(
-                mapelement,
-                map.getRepresentation(),
-                coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
     }
 }

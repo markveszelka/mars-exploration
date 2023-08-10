@@ -25,11 +25,6 @@ public class MapElementBuilderImpl implements MapElementBuilder {
         replaceNullWithEmptyStrings(representation);
         placeElementRandomlyInRepresentation(size, symbol, dimension, representation);
 
-        System.out.println(name);
-        for (String[] rep : representation) {
-            System.out.println(Arrays.toString(rep));
-        }
-
         return new MapElement(
                 representation,
                 name,
