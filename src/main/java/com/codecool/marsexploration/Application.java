@@ -56,7 +56,7 @@ public class Application {
         generatedMap.setSuccessfullyGenerated(true);
 
         MapFileWriter fileWriter = new MapFileWriterImpl();
-        fileWriter.writeMapFile(generateMap, FileDir);
+        fileWriter.writeMapFile(generatedMap, FileDir);
 
 //        for (String[] rep : representation) {
 //            System.out.println(Arrays.toString(rep));
