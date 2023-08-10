@@ -39,10 +39,8 @@ public class Application {
 
         MapConfigurationValidator mapConfigValidator = new MapConfigurationValidatorImpl();
         System.out.println("MAP CONFIGURATION IS VALID: " + mapConfigValidator.validate(mapConfig));
-
         DimensionCalculator dimensionCalculator = new DimensionCalculatorImpl();
         CoordinateCalculator coordinateCalculator = new CoordinateCalculatorImpl();
-
         MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
@@ -60,10 +58,7 @@ public class Application {
         MapFileWriter fileWriter = new MapFileWriterImpl();
         fileWriter.writeMapFile(generatedMap, FileDir);
 
-
-        for (String[] rep : representation) {
-            System.out.println(Arrays.toString(rep));
-        }
+        printMapToConsole(representation);
 
         int counter2 = countTakenElementsByCell(representation);
         printInfoToConsole(counter, counter2);
@@ -71,6 +66,12 @@ public class Application {
         createAndWriteMaps(1, mapGenerator, mapConfig);
 
         System.out.println("Mars maps successfully generated.");
+    }
+
+    private static void printMapToConsole(String[][] representation) {
+        for (String[] rep : representation) {
+            System.out.println(Arrays.toString(rep));
+        }
     }
 
     private static int countEmptyCells(String[][] representation) {
