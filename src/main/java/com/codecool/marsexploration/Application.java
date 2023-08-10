@@ -8,7 +8,10 @@ import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.builder.*;
 import com.codecool.marsexploration.mapelements.service.generator.*;
 import com.codecool.marsexploration.mapelements.service.placer.*;
+import com.codecool.marsexploration.output.service.MapFileWriter;
+import com.codecool.marsexploration.output.service.MapFileWriterImpl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,8 @@ import java.util.List;
 public class Application {
     // You can change this to any directory you like
     private static final String WorkDir = "src/main";
+
+    private static final String FileDir = "src/main/resources";
 
     public static void main(String[] args) {
         System.out.println("Mars Exploration Sprint 1");
@@ -56,9 +61,12 @@ public class Application {
         String[][] representation = generateMap.getRepresentation();
         replaceNullWithEmptyStrings(representation);
 
-        for (String[] rep : representation) {
-            System.out.println(Arrays.toString(rep));
-        }
+        MapFileWriter fileWriter = new MapFileWriterImpl(generateMap, FileDir);
+        fileWriter.executeWrite();
+
+//        for (String[] rep : representation) {
+//            System.out.println(Arrays.toString(rep));
+//        }
 
         createAndWriteMaps(3, mapGenerator, mapConfig);
 
