@@ -37,6 +37,14 @@ public class Application {
 
         String[][] representation = map.getRepresentation();
         replaceNullWithEmptyStrings(representation);
+        int counter = 0;
+        for (String[] row : representation) {
+            for (String string : row) {
+                if (string.equals(" ")) {
+                    counter++;
+                }
+            }
+        }
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
         Map generatedMap = mapGenerator.generate(mapConfig);
         generatedMap.setSuccessfullyGenerated(true);
@@ -44,6 +52,19 @@ public class Application {
         for (String[] rep : representation) {
             System.out.println(Arrays.toString(rep));
         }
+
+        int counter2 = 0;
+        for (String[] row : representation) {
+            for (String string : row) {
+                if (!string.equals(" ")) {
+                    counter2++;
+                }
+            }
+        }
+        System.out.println("ALL EMPTY CELLS: " + counter);
+        System.out.println("TAKEN CELLS: " + counter2);
+        System.out.println("REMAINING EMPTY: " + (counter - counter2));
+        System.out.println("ELEMENTS: 130");
 
         createAndWriteMaps(3, mapGenerator, mapConfig);
 

@@ -19,8 +19,6 @@ public class MapElementPlacerImpl implements MapElementPlacer {
                 for (int j = 0; j < elementRepresentation[i].length; j++) {
                     if (map[coordinate.x() + i][coordinate.y() + j].equals(" ")) {
                         map[coordinate.x() + i][coordinate.y() + j] = elementRepresentation[i][j];
-                    } else {
-                        break;
                     }
                 }
             }

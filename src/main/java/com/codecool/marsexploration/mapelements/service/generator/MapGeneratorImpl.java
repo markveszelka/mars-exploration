@@ -24,6 +24,8 @@ public class MapGeneratorImpl implements MapGenerator {
 
     @Override
     public Map generate(MapConfiguration mapConfig) {
+        int mapDimension = map.getRepresentation().length;
+        String[][] mapRepresentation = map.getRepresentation();
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
         // SORT BY SIZE, DESCENDING:
         mapElements.sort((element1, element2) -> Integer.compare(element2.getDimension(), element1.getDimension()));
@@ -33,8 +35,8 @@ public class MapGeneratorImpl implements MapGenerator {
             if (canPlaceElement) {
                 mapElementPlacer.placeElement(
                         mapelement,
-                        map.getRepresentation(),
-                        coordinateCalculator.getRandomCoordinate(map.getRepresentation().length));
+                        mapRepresentation,
+                        coordinateCalculator.getRandomCoordinate(mapDimension));
             } else {
                 callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
             }
@@ -44,9 +46,12 @@ public class MapGeneratorImpl implements MapGenerator {
     }
 
     private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
+        int mapDimension = map.getRepresentation().length;
+        String[][] mapRepresentation = map.getRepresentation();
+
         return mapElementPlacer.canPlaceElement(
                 mapelement,
-                map.getRepresentation(),
-                coordinateCalculator.getRandomCoordinate(map.getRepresentation().length));
+                mapRepresentation,
+                coordinateCalculator.getRandomCoordinate(mapDimension));
     }
 }
