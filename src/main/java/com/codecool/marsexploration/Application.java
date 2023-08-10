@@ -32,7 +32,7 @@ public class Application {
         MapElementBuilder mapElementFactory = new MapElementBuilderImpl(dimensionCalculator, coordinateCalculator);
         MapElementsGenerator mapElementsGenerator = new MapElementsGeneratorImpl(mapElementFactory);
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
-        System.out.println("Number of elements: " + mapElements.size());
+        System.out.println("Number of elements: " + mapElements.size()); // EDDIG FIXEN JÓ
         MapElementPlacer mapElementPlacer = new MapElementPlacerImpl();
 
         String[][] representation = map.getRepresentation();
@@ -125,7 +125,6 @@ public class Application {
                 ""
         );
 
-//        List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg);
         List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
         return new MapConfiguration(625, 0.5, elementsCfg);
     }
