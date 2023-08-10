@@ -8,6 +8,7 @@ import java.util.Arrays;
 public class MapElementPlacerImpl implements MapElementPlacer {
     @Override
     public boolean canPlaceElement(MapElement element, String[][] map, Coordinate coordinate) {
+        System.out.println(coordinate);
         int elementDimension = element.getDimension();
         boolean canPlace = true;
         String[][] elementRepresentation = element.getRepresentation();
@@ -19,6 +20,9 @@ public class MapElementPlacerImpl implements MapElementPlacer {
                 for (int j = 0; j < elementRepresentation[i].length; j++) {
                     if (map[coordinate.x() + i][coordinate.y() + j].equals(" ")) {
                         map[coordinate.x() + i][coordinate.y() + j] = elementRepresentation[i][j];
+                    } else {
+                        canPlace = false;
+                        break;
                     }
                 }
             }

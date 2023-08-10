@@ -1,5 +1,6 @@
 package com.codecool.marsexploration.mapelements.service.generator;
 
+import com.codecool.marsexploration.calculators.model.Coordinate;
 import com.codecool.marsexploration.calculators.service.CoordinateCalculator;
 import com.codecool.marsexploration.configuration.model.MapConfiguration;
 import com.codecool.marsexploration.mapelements.model.Map;
@@ -31,27 +32,28 @@ public class MapGeneratorImpl implements MapGenerator {
         mapElements.sort((element1, element2) -> Integer.compare(element2.getDimension(), element1.getDimension()));
 
         for (MapElement mapelement : mapElements) {
-            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+            Coordinate randomCord = coordinateCalculator.getRandomCoordinate(mapDimension);
+            boolean canPlaceElement = callCanPlaceElementMethod(map, randomCord, mapElementPlacer, mapelement);
             if (canPlaceElement) {
                 mapElementPlacer.placeElement(
                         mapelement,
                         mapRepresentation,
-                        coordinateCalculator.getRandomCoordinate(mapDimension));
+                        randomCord);
             } else {
-                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
+                randomCord = coordinateCalculator.getRandomCoordinate(mapDimension);
+                callCanPlaceElementMethod(map, randomCord, mapElementPlacer, mapelement);
             }
         }
 
         return map;
     }
 
-    private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
-        int mapDimension = map.getRepresentation().length;
+    private static boolean callCanPlaceElementMethod(Map map, Coordinate randomCord, MapElementPlacer mapElementPlacer, MapElement mapelement) {
         String[][] mapRepresentation = map.getRepresentation();
 
         return mapElementPlacer.canPlaceElement(
                 mapelement,
                 mapRepresentation,
-                coordinateCalculator.getRandomCoordinate(mapDimension));
+                randomCord);
     }
 }
