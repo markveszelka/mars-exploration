@@ -134,7 +134,6 @@ public class Application {
         );
 
         List<MapElementConfiguration> elementsCfg = List.of(mountainsCfg, pitsCfg, mineralsCfg, watersCfg);
-        return new MapConfiguration(625, 0.5, elementsCfg);
+        return new MapConfiguration(1000, 0.5, elementsCfg);
     }
 }
-
