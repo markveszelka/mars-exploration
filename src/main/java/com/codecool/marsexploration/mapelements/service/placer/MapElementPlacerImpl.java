@@ -11,6 +11,7 @@ public class MapElementPlacerImpl implements MapElementPlacer {
         int elementDimension = element.getDimension();
         boolean canPlace = true;
         String[][] elementRepresentation = element.getRepresentation();
+
         if (coordinate.x() > map.length - elementDimension || coordinate.y() > map.length - elementDimension) {
             canPlace = false;
         } else {

@@ -6,7 +6,7 @@ import com.codecool.marsexploration.mapelements.model.Map;
 import com.codecool.marsexploration.mapelements.model.MapElement;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacer;
 
-import java.util.List;
+import java.util.*;
 
 public class MapGeneratorImpl implements MapGenerator {
 
@@ -25,6 +25,8 @@ public class MapGeneratorImpl implements MapGenerator {
     @Override
     public Map generate(MapConfiguration mapConfig) {
         List<MapElement> mapElements = (List<MapElement>) mapElementsGenerator.createAll(mapConfig);
+        // SORT BY SIZE, DESCENDING:
+        mapElements.sort((element1, element2) -> Integer.compare(element2.getDimension(), element1.getDimension()));
 
         for (MapElement mapelement : mapElements) {
             boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);

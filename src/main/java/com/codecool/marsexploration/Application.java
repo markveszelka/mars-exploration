@@ -35,18 +35,6 @@ public class Application {
         System.out.println("Number of elements: " + mapElements.size());
         MapElementPlacer mapElementPlacer = new MapElementPlacerImpl();
 
-//        for (MapElement mapelement : mapElements) {
-//            boolean canPlaceElement = callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-//            if (canPlaceElement) {
-//                mapElementPlacer.placeElement(
-//                        mapelement,
-//                        map.getRepresentation(),
-//                        coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
-//            } else {
-//                callCanPlaceElementMethod(map, coordinateCalculator, mapElementPlacer, mapelement);
-//            }
-//        }
-
         String[][] representation = map.getRepresentation();
         replaceNullWithEmptyStrings(representation);
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
@@ -66,13 +54,6 @@ public class Application {
         for (String[] row : representation) {
             Arrays.fill(row, " ");
         }
-    }
-
-    private static boolean callCanPlaceElementMethod(Map map, CoordinateCalculator coordinateCalculator, MapElementPlacer mapElementPlacer, MapElement mapelement) {
-        return mapElementPlacer.canPlaceElement(
-                mapelement,
-                map.getRepresentation(),
-                coordinateCalculator.getRandomCoordinate(mapelement.getDimension()));
     }
 
     private static void createAndWriteMaps(int count, MapGenerator mapGenerator, MapConfiguration mapConfig) {
