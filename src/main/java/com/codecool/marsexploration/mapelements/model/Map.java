@@ -41,4 +41,3 @@ public class Map {
         return createStringRepresentation(representation);
     }
 }
-
