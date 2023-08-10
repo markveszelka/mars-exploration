@@ -19,6 +19,8 @@ import com.codecool.marsexploration.mapelements.service.generator.MapGenerator;
 import com.codecool.marsexploration.mapelements.service.generator.MapGeneratorImpl;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacer;
 import com.codecool.marsexploration.mapelements.service.placer.MapElementPlacerImpl;
+import com.codecool.marsexploration.output.service.MapFileWriter;
+import com.codecool.marsexploration.output.service.MapFileWriterImpl;
 
 import java.util.Arrays;
 import java.util.List;
@@ -54,6 +56,9 @@ public class Application {
         MapGenerator mapGenerator = new MapGeneratorImpl(map, mapElementsGenerator, coordinateCalculator, mapElementPlacer);
         Map generatedMap = mapGenerator.generate(mapConfig);
         generatedMap.setSuccessfullyGenerated(true);
+
+        MapFileWriter fileWriter = new MapFileWriterImpl();
+        fileWriter.writeMapFile(generatedMap, FileDir);
 
 
         for (String[] rep : representation) {
