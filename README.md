@@ -67,6 +67,7 @@ You can clone the project and install it to see it in action.
    ```sh
    mvn clean install
    ```
+3. Execute the `Application.java` file using the IDE of your choice.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
