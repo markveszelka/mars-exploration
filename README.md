@@ -5,7 +5,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/CodecoolGlobal/mars-exploration-1-1q2023-java-nagmil2077">
+  <a href="https://github.com/markveszelka/mars-exploration.git">
     <img src="images/mars.png" alt="Logo" width="20%" height="20%">
   </a>
 
@@ -14,7 +14,7 @@
   <p align="center">
     Study project - Teamwork
     <br />
-    <a href="https://github.com/CodecoolGlobal/mars-exploration-1-1q2023-java-nagmil2077"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/markveszelka/mars-exploration.git"><strong>Explore the docs »</strong></a>
     <br />
     <br />
   </p>
@@ -24,7 +24,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/CodecoolGlobal/mars-exploration-1-1q2023-java-nagmil2077)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/markveszelka/mars-exploration.git)
 
 This project was created for educational purposes.
 The main goal of this project was to create an application that generates a randomized, Mars themed map using a multidimensional array,
@@ -61,7 +61,7 @@ You can clone the project and install it to see it in action.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/CodecoolGlobal/mars-exploration-1-1q2023-java-nagmil2077
+   git clone https://github.com/markveszelka/mars-exploration.git
    ```
 2. Navigate to the project folder and build the project using [Maven](https://maven.apache.org/index.html), run the code from the backend folder
    ```sh
@@ -74,11 +74,9 @@ You can clone the project and install it to see it in action.
 <!-- CONTACT -->
 ## Contact
 
-Ágnes Gurmai-Málnás - [github](https://github.com/BerryBusiness) - [linkedin](https://www.linkedin.com/in/agnes-gurmai-malnas/) - agnes.malnas@gmail.com\
-Milan Nagy - [github](https://github.com/nagmil2077) - [linkedin](https://www.linkedin.com/in/milan-nagy-a76b1416a/) - corey321@gmail.com\
 Mark Veszelka - [github](https://github.com/markveszelka) - [linkedin](https://www.linkedin.com/in/mark-veszelka/) - mark.veszelka@gmail.com
 
-Project Link: [https://github.com/CodecoolGlobal/mars-exploration-1-1q2023-java-nagmil2077](https://github.com/nagmil2077/stackoverflow-tw)
+Project Link: [https://github.com/markveszelka/mars-exploration.git](https://github.com/markveszelka/mars-exploration.git)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
