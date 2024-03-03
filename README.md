@@ -74,6 +74,8 @@ You can clone the project and install it to see it in action.
 <!-- CONTACT -->
 ## Contact
 
+Ágnes Gurmai-Málnás - [github](https://github.com/BerryBusiness) - [linkedin](https://www.linkedin.com/in/agnes-gurmai-malnas/) - agnes.malnas@gmail.com\
+Milan Nagy - [github](https://github.com/nagmil2077) - [linkedin](https://www.linkedin.com/in/milan-nagy-a76b1416a/) - corey321@gmail.com\
 Mark Veszelka - [github](https://github.com/markveszelka) - [linkedin](https://www.linkedin.com/in/mark-veszelka/) - mark.veszelka@gmail.com
 
 Project Link: [https://github.com/markveszelka/mars-exploration.git](https://github.com/markveszelka/mars-exploration.git)
